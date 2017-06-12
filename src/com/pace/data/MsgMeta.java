@@ -11,11 +11,6 @@ public class MsgMeta {
         mBsContent = data;
     }
 
-    // for read
-    public MsgMeta(byte[] data) {
-
-    }
-
     public final boolean isHeader() {
         return mHeader != null;
     }

@@ -16,7 +16,7 @@ public class BleWirter {
     private MsgWrap mMsgWrap = null;
     private SemaphoreControl mSemaphoreControl = null;
 
-    class SemaphoreControl {
+    static class SemaphoreControl {
         private Semaphore mSemaphore = null;
         private int iRet = -1;
 
