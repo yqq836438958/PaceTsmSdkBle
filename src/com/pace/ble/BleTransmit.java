@@ -4,7 +4,7 @@ package com.pace.ble;
 import android.os.Looper;
 import android.util.Log;
 
-import com.clj.fastble.BleManager;
+import com.pace.ble.session.IBleSession;
 import com.pace.data.Result;
 
 public class BleTransmit {
@@ -13,13 +13,12 @@ public class BleTransmit {
     }
 
     public static final String TAG = "BLE";
-    private BleAccessPoint mAccessPoint = null;
-    private BleManager mBleManager = null;
-    private BleWirter mBleWirter = null;
     private final long MS_BLE_INVOKE = 10 * 1000;
     private static Object sLockObj = new Object();
+    private IBleSession mBleSession = null;
 
-    private void init() {
+    public BleTransmit(IBleSession session) {
+        mBleSession = session;
     }
 
     public byte[] transmit(byte[] content) {
@@ -38,8 +37,8 @@ public class BleTransmit {
                 result.setData(data);
             }
         };
-        new BleReader(mBleManager, mAccessPoint).addCallback(callBack);
-        if (!!mBleWirter.invoke()) {
+        new BleReader(mBleSession).addCallback(callBack);
+        if (!new BleWirter(mBleSession).invoke(content)) {
             Log.e(TAG, "write fail");
             return null;
         }

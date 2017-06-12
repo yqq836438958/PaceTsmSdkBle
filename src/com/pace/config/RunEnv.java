@@ -5,12 +5,19 @@ import com.pace.data.TsmMsgHeader;
 import com.pace.data.MsgHeader;
 
 public class RunEnv {
+    public static IRunType sRunType = null;
+    public static IRunType sTsmType = new TsmType();
+
+    public static void setRunType(IRunType type) {
+        sRunType = type;
+    }
+
     public static interface IRunType {
         public MsgHeader genHeader(byte[] data);
     }
 
     public static IRunType getType() {
-        return new TsmType();
+        return sRunType;
     }
 
     public static class TsmType implements IRunType {
