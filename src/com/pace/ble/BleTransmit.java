@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.pace.ble.session.IBleSession;
+import com.pace.data.MsgWrap;
 import com.pace.data.Result;
 
 public class BleTransmit {
@@ -21,7 +22,7 @@ public class BleTransmit {
         mBleSession = session;
     }
 
-    public byte[] transmit(byte[] content) {
+    public byte[] transmit(MsgWrap encodeDat) {
         if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
             throw new IllegalThreadStateException("can not call in mainUI");
         }
@@ -38,7 +39,7 @@ public class BleTransmit {
             }
         };
         new BleReader(mBleSession).addCallback(callBack);
-        if (!new BleWirter(mBleSession).invoke(content)) {
+        if (!new BleWirter(mBleSession).invoke(encodeDat)) {
             Log.e(TAG, "write fail");
             return null;
         }

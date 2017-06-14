@@ -2,11 +2,15 @@
 package com.pace.tsm.action;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.pace.data.MsgWrap;
 import com.pace.data.Result;
 import com.pace.tsm.TsmData.OpenChannelReq;
 import com.pace.tsm.TsmData.OpenChannelRsp;
 
 public class OpenChannel extends TsmAction {
+
+    public OpenChannel() {
+    }
 
     @Override
     protected byte[] onEncodeReqDat(byte[] src) {
@@ -26,6 +30,12 @@ public class OpenChannel extends TsmAction {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    @Override
+    protected MsgWrap onWrapData(byte[] data) {
+        // TODO Auto-generated method stub
         return null;
     }
 }

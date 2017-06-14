@@ -13,7 +13,6 @@ import java.util.concurrent.Semaphore;
 
 public class BleWirter {
     private IBleSession mBleSession = null;
-    private MsgWrap mMsgWrap = null;
     private SemaphoreControl mSemaphoreControl = null;
 
     static class SemaphoreControl {
@@ -62,11 +61,11 @@ public class BleWirter {
         mBleSession = session;
     }
 
-    public boolean invoke(byte[] data) {
+    public boolean invoke(MsgWrap msgWrap) {
         boolean writeSuc = false;
-        mMsgWrap = new MsgWrap(data);
         mSemaphoreControl = new SemaphoreControl();
-        for (MsgMeta item : mMsgWrap.getItems()) {
+        for (MsgMeta item : msgWrap.getItems()) {
+            // 是否需要等待回馈？
             writeSuc = writeDataInternal(item.getData()) && mSemaphoreControl.waitResult(500) == 0;
             if (!writeSuc) {
                 break;
